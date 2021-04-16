@@ -1,39 +1,44 @@
+#include <stdlib.h>
 #include <stdio.h>
-
-void CassaforteRec(unsigned int n, unsigned int k,int i, int* vet, int* cont) {
+#include <time.h>
+#include <math.h>
+void CassaforteRec(int n, int k, int i, int* comb, int *sum,int *tot) {
+	//if (*sum > k)
+		//return;
 	if (i == n) {
-		int sum = 0;
-		for (int p = 0; p < n; p++) {
-			sum += vet[p];
-		}
-		if (sum == k) {
-			(*cont)++;
-			printf("%d) { ", *cont);
-			for (int u = 0; u < n; u++) {
-				printf("%d ", vet[u]);
+		if (*sum == k) {
+			*tot += 1;
+			printf("%d-esima Combinazione: ",*tot);
+			for (int j = 0; j < n; j++) {
+				printf("%d ", comb[j]);
 			}
-			printf("}\n");
-			return;
+			printf("\n");
 		}
-		else
-			return;
+		return;
 	}
 
-	for (int y = 0; y < 10; y++) {
-		vet[i] = y;
-		CassaforteRec(n, k, i+1, vet, cont);
+	for (int j = 0; j < 10; j++) {
+		comb[i] = j;
+		*sum += j;
+		CassaforteRec(n, k, i + 1, comb, sum,tot);
+		*sum -= j;
 	}
 }
 
-int Cassaforte(unsigned int n, unsigned int k) {
-	int* vet = malloc(n * sizeof(int));
-	int cont = 0;
-	CassaforteRec(n, k, 0, vet,&cont);
-	free(vet);
-	return 0;
+void Cassaforte(int n, int k) {
+	int* comb = calloc(n, sizeof(int));
+	int sum = 0;
+	int tot = 0;
+	CassaforteRec(n, k, 0, comb, &sum,&tot);
+	return;
 }
 
-int main(void) {
-	Cassaforte(5, 10);
-	return 0;
+int main() {
+	float t = time(0);
+	Cassaforte(7, 44);
+	double c = time(0);
+	printf("\nTempo esecuzione: %f secondi", (c - t));
+	int tot = pow(7, 10);
+	printf("\n\nSu %d combinazioni possibili", tot);
+	return;
 }
