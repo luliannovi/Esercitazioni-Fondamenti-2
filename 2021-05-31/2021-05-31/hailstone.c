@@ -14,7 +14,7 @@ int hailstone(int n, int i, int* now) {
 	}else
 		return hailstone(3*n + 1, i+1, now);
 }
-
+/*
 int main(int argc, char** argv) {
 	if (argc != 2)
 		return -1;
@@ -38,4 +38,4 @@ int main(int argc, char** argv) {
 	}
 	free(now);
 	return k;
-}
+}*/
